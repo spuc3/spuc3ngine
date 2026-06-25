@@ -522,6 +522,6 @@
   };
 
   window.openHelp = function () {
-    window.open("https://direct.lc.chat/19752556/", "_blank");
+    window.open("https://direct.lc.chat/19812376/", "_blank");
   };
 })();
