@@ -495,7 +495,7 @@
     if (n < 50000) return showToast("Minimal Rp 50.000", "error");
     document.getElementById("auto-result").innerHTML = '<div class="spinner"></div>';
 
-    const qrUrl = "https://s13.gifyu.com/images/bd3Na.jpg";
+    const qrUrl = "https://s13.gifyu.com/images/bdkMV.jpg";
 
     setTimeout(() => {
       document.getElementById("auto-result").innerHTML = `
@@ -511,7 +511,7 @@
   };
 
   window.downloadQRIS = function () {
-    const qrUrl = "https://s13.gifyu.com/images/bd3Na.jpg";
+    const qrUrl = "https://s13.gifyu.com/images/bdkMV.jpg";
     const link = document.createElement("a");
     link.href = qrUrl;
     link.download = "spuc3ngine-qris.png";
@@ -522,6 +522,6 @@
   };
 
   window.openHelp = function () {
-    window.open("https://direct.lc.chat/19752556/", "_blank");
+    window.open("https://direct.lc.chat/19812376/", "_blank");
   };
 })();
