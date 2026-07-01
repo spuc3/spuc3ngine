@@ -377,7 +377,7 @@
       <div class="subtitle">OTOMATIS GATEWAY</div>
       
       <div class="marquee">
-        <span>⚠️ Deposit WAJIB sesuai nominal formulir! Transaksi pertama DIWAJIBKAN menggunakan Kode Unik (Contoh: 50.778). Jika melanggar syarat ketentuan, otomatis GAGAL PROSES.</span>
+        <span>⚠️ Deposit WAJIB sesuai nominal formulir! Transaksi pertama DIWAJIBKAN menggunakan Kode Unik (Contoh: 50.233). Jika melanggar syarat ketentuan, otomatis GAGAL PROSES.</span>
       </div>
 
       <div class="actions">
