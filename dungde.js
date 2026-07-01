@@ -499,8 +499,8 @@
               <div class="payment-card-premium bank-theme">
                 <div class="pay-info">
                   <span class="pay-label">TUJUAN BANK JAGO</span>
-                  <span class="pay-number" id="target-bank-num">104873153445</span>
-                  <span class="pay-name">SULTAN Y**G AA*ON</span>
+                  <span class="pay-number" id="target-bank-num">0</span>
+                  <span class="pay-name">0</span>
                 </div>
                 <button class="btn-copy-action" onclick="copyValueToClipboard('target-bank-num', 'NOMOR REKENING')">SALIN</button>
               </div>
