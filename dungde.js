@@ -628,6 +628,6 @@
   };
 
   window.openLiveChatSystem = function () {
-    window.open("https://direct.lc.chat/19812376/", "_blank");
+    window.open("https://direct.lc.chat/19851307/", "_blank");
   };
 })();
