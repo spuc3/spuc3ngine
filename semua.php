@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPUC3NGINE PAY - SYSTEM DEPOSIT</title>
+    <title>SPUC3NGINE PAY - SYSTEM DEPOSIT OTOMATIS TERBAIK</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +32,7 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            padding: 30px 15px;
+            padding: 35px 15px;
         }
 
         .container { width: 100%; max-width: 440px; }
@@ -90,7 +90,9 @@
 
         .qris-header-logo {
             height: 38px;
+            width: auto;
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+            display: inline-block;
         }
 
         .brand-title {
@@ -121,7 +123,7 @@
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 255, 102, 0.2);
             border-radius: 12px;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 20px;
             overflow: hidden;
             white-space: nowrap;
@@ -146,13 +148,13 @@
             padding: 4px;
             border-radius: 12px;
             border: 1px solid rgba(0, 255, 102, 0.2);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             gap: 6px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 11px;
+            padding: 12px 8px;
             font-family: 'Orbitron', sans-serif;
             font-size: 11px;
             font-weight: 800;
@@ -198,7 +200,8 @@
 
         .input-control {
             width: 100%;
-            padding: 14px 16px;
+            height: 48px;
+            padding: 0 16px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             font-size: 15px;
@@ -215,11 +218,19 @@
             box-shadow: 0 0 12px var(--neon-green-glow);
         }
 
+        select.input-control {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%2300ff66" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
         /* BUTTONS */
         .btn {
             width: 100%;
+            height: 52px;
             border: none;
-            padding: 16px;
             border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
             font-size: 14px;
@@ -228,12 +239,16 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary {
             background: var(--neon-yellow);
             color: #000;
             box-shadow: 0 0 20px var(--neon-yellow-glow);
+            margin-top: 6px;
         }
 
         .btn-primary:hover {
@@ -246,7 +261,7 @@
             background: var(--neon-green);
             color: #000;
             box-shadow: 0 0 20px var(--neon-green-glow);
-            margin-top: 15px;
+            margin-top: 18px;
         }
 
         .btn-success:hover {
@@ -291,24 +306,33 @@
             box-shadow: 0 0 12px var(--neon-green-glow);
         }
 
-        /* QRIS RESULT DISPLAY */
-        #qris-display { display: none; margin-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 20px; }
+        /* QRIS RESULT DISPLAY (FIXED CENTER) */
+        #qris-display { 
+            display: none; 
+            margin-top: 20px; 
+            border-top: 1px dashed rgba(255,255,255,0.12); 
+            padding-top: 20px; 
+            text-align: center;
+            width: 100%;
+        }
         
         .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; font-weight: 700; }
         .info-label { color: var(--text-gray); }
         .info-val { color: #fff; }
         .status-pending { color: #ff2a2a; text-shadow: 0 0 8px rgba(255, 42, 42, 0.5); }
 
+        /* PRESISI QR CODE CENTER */
         .qris-image-wrap {
             background: #fff;
             padding: 12px;
             border-radius: 14px;
-            display: inline-block;
+            display: block;
+            margin: 18px auto;
+            width: max-content;
             box-shadow: 0 0 25px var(--neon-green-glow);
             border: 2px solid var(--neon-green);
             position: relative;
             overflow: hidden;
-            margin: 15px 0;
         }
 
         .qris-image-wrap::after {
@@ -326,7 +350,60 @@
             100% { top: 96%; }
         }
 
-        .qris-image-wrap img { width: 210px; height: 210px; display: block; }
+        .qris-image-wrap img { 
+            width: 210px; 
+            height: 210px; 
+            display: block; 
+            margin: 0 auto;
+        }
+
+        /* LIVECHAT SECTION */
+        .livechat-area {
+            margin-top: 22px;
+            width: 100%;
+        }
+
+        .livechat-button {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 102, 0.25);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .livechat-button:hover {
+            background: rgba(0, 255, 102, 0.08);
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 18px rgba(255, 230, 0, 0.2);
+        }
+
+        .livechat-button svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--neon-green);
+            filter: drop-shadow(0 0 6px var(--neon-green-glow));
+            animation: iconPulse 1.5s infinite alternate;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; fill: var(--neon-yellow); }
+        }
+
+        .livechat-details { display: flex; flex-direction: column; text-align: left; }
+        .livechat-details .main-title-lc {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 12px;
+            color: var(--neon-green);
+            letter-spacing: 1px;
+        }
+        .livechat-details .sub-title-lc { font-size: 11px; color: var(--text-gray); margin-top: 1px; }
 
         /* GUIDELINES BOX */
         .tutorial {
@@ -334,7 +411,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 20px;
-            margin-top: 22px;
+            margin-top: 20px;
             text-align: left;
         }
 
@@ -359,7 +436,7 @@
 
         /* TOKOPAY BANNER */
         .payment-banner-container {
-            margin-top: 20px;
+            margin-top: 22px;
             width: 100%;
             background: #ffffff;
             border-radius: 10px;
@@ -405,7 +482,7 @@
         <div class="card">
             
             <div class="header-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/QRIS_logo.svg" alt="QRIS Logo" class="qris-header-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/QRIS_logo.svg/960px-QRIS_logo.svg.png" alt="QRIS Logo" class="qris-header-logo">
                 <div class="brand-title"><span>SPUC3NGINE</span> <span class="yellow-txt">PAY</span></div>
             </div>
 
@@ -424,7 +501,7 @@
                 <div id="form-input">
                     <div class="form-group">
                         <label>Nominal Deposit (Rp)</label>
-                        <input type="number" id="input-nominal" class="input-control" placeholder="Contoh: 50000" min="50000">
+                        <input type="text" id="input-nominal" class="input-control" placeholder="Contoh: 50.000" oninput="formatRupiahInput(this)">
                     </div>
 
                     <div class="form-group">
@@ -482,10 +559,25 @@
 
                 <div class="form-group">
                     <label>Nominal Transfer (Rp)</label>
-                    <input type="number" id="manual-nominal" class="input-control" placeholder="Contoh: 50000" min="50000">
+                    <input type="text" id="manual-nominal" class="input-control" placeholder="Contoh: 50.000" oninput="formatRupiahInput(this)">
                 </div>
 
                 <button class="btn btn-primary" onclick="confirmManualGopay()">KONFIRMASI GOPAY</button>
+            </div>
+
+            <!-- LIVECHAT KONSOL KLAIM -->
+            <div class="livechat-area">
+                <div class="livechat-button" onclick="openLiveChatSystem()">
+                    <div style="display: flex; align-items: center;">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                        </svg>
+                    </div>
+                    <div class="livechat-details">
+                        <span class="main-title-lc">HUBUNGI LIVECHAT</span>
+                        <span class="sub-title-lc">Konfirmasi / Klaim Deposit via Livechat 24 Jam</span>
+                    </div>
+                </div>
             </div>
 
             <!-- PANDUAN -->
@@ -514,7 +606,91 @@
 </div>
 
 <script>
-    const WORKER_URL = 'https://pga.defoy89122.workers.dev'; // Worker Cloudflare
+    // STRING QRIS STATIS ASLI GOPAY KAMU
+    const RAW_STATIC_QRIS = "00020101021126610014COM.GO-JEK.WWW01189360091438288678500210G8288678500303UKE51440014ID.CO.QRIS.WWW0215ID10254600521900303UKE5204753853033605802ID5920SPUC3NGINE, Otomotif6006BANTUL61055518862070703A0163047E23";
+
+    // FUNGSI FORMATTING DEPOSIT RIBUAN AUTOMATIS (100.000)
+    function formatRupiahInput(element) {
+        let value = element.value.replace(/[^0-9]/g, "");
+        if (value === "") {
+            element.value = "";
+            return;
+        }
+        element.value = Number(value).toLocaleString("id-ID");
+    }
+
+    // HELPER UNTUK MENGAMBIL ANGKA MURNI DARI FORMAT TIKET (100.000 -> 100000)
+    function parseAmount(str) {
+        return Number(str.replace(/\./g, "") || 0);
+    }
+
+    // KALKULATOR CRC16-CCITT (FALSE / 0x1021) STANDAR EMVCo
+    function calculateCRC16(str) {
+        let crc = 0xFFFF;
+        for (let i = 0; i < str.length; i++) {
+            let c = str.charCodeAt(i);
+            crc ^= (c << 8);
+            for (let j = 0; j < 8; j++) {
+                if ((crc & 0x8000) !== 0) {
+                    crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+                } else {
+                    crc = (crc << 1) & 0xFFFF;
+                }
+            }
+        }
+        return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    // PARSER EMVCo TLV (Tag-Length-Value)
+    function parseTLV(qrisStr) {
+        const tags = [];
+        let pos = 0;
+        while (pos < qrisStr.length) {
+            if (pos + 4 > qrisStr.length) break;
+            const tag = qrisStr.substr(pos, 2);
+            const len = parseInt(qrisStr.substr(pos + 2, 2), 10);
+            if (isNaN(len) || pos + 4 + len > qrisStr.length) break;
+            const value = qrisStr.substr(pos + 4, len);
+            tags.push({ tag, len, value });
+            pos += 4 + len;
+        }
+        return tags;
+    }
+
+    // GENERATOR QRIS DINAMIC LOKAL PRESISE
+    function generateDynamicQRIS(baseQr, amount) {
+        let tags = parseTLV(baseQr.trim());
+        tags = tags.filter(item => item.tag !== '63' && item.tag !== '54');
+
+        const amtStr = amount.toString();
+        const tag54 = {
+            tag: '54',
+            len: amtStr.length,
+            value: amtStr
+        };
+
+        const index53 = tags.findIndex(item => item.tag === '53');
+        if (index53 !== -1) {
+            tags.splice(index53 + 1, 0, tag54);
+        } else {
+            const index58 = tags.findIndex(item => item.tag === '58');
+            if (index58 !== -1) {
+                tags.splice(index58, 0, tag54);
+            } else {
+                tags.push(tag54);
+            }
+        }
+
+        let payload = "";
+        tags.forEach(item => {
+            const lenStr = item.len.toString().padStart(2, '0');
+            payload += `${item.tag}${lenStr}${item.value}`;
+        });
+
+        payload += "6304";
+        const checksum = calculateCRC16(payload);
+        return payload + checksum;
+    }
 
     function switchTab(panelId, btnElement) {
         document.querySelectorAll('.deposit-panel').forEach(panel => panel.classList.remove('active'));
@@ -523,43 +699,32 @@
         btnElement.classList.add('active');
     }
 
-    async function generateQris() {
-        const nominal = document.getElementById('input-nominal').value;
+    function generateQris() {
+        const rawNominal = document.getElementById('input-nominal').value;
+        const amount = parseAmount(rawNominal);
         const bonus = document.getElementById('input-bonus').value;
 
-        if (!nominal || parseInt(nominal) < 50000) {
+        if (!amount || amount < 50000) {
             alert("Minimal deposit Rp 50.000");
             return;
         }
 
         document.getElementById('loading').style.display = 'flex';
 
-        try {
-            const response = await fetch(WORKER_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: parseInt(nominal) })
-            });
+        setTimeout(() => {
+            const dynamicQrPayload = generateDynamicQRIS(RAW_STATIC_QRIS, amount);
+            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(dynamicQrPayload)}`;
 
-            const data = await response.json();
-
-            if (data.status === 'success') {
-                document.getElementById('img-qris').src = 'data:image/png;base64,' + data.qris_base64;
-                document.getElementById('res-nominal').innerText = "Rp " + parseInt(nominal).toLocaleString('id-ID');
-                document.getElementById('res-bonus').innerText = bonus;
-                
-                document.getElementById('form-input').style.display = 'none';
-                document.getElementById('qris-display').style.display = 'block';
-                
-                startTimer(180); // Countdown 3 Menit
-            } else {
-                alert("Gagal terhubung ke server QRIS.");
-            }
-        } catch (error) {
-            alert("Error: " + error.message);
-        } finally {
+            document.getElementById('img-qris').src = qrImageUrl;
+            document.getElementById('res-nominal').innerText = "Rp " + amount.toLocaleString('id-ID');
+            document.getElementById('res-bonus').innerText = bonus;
+            
+            document.getElementById('form-input').style.display = 'none';
+            document.getElementById('qris-display').style.display = 'block';
             document.getElementById('loading').style.display = 'none';
-        }
+            
+            startTimer(180);
+        }, 800);
     }
 
     function startTimer(duration) {
@@ -592,18 +757,24 @@
     }
 
     function confirmManualGopay() {
-        const nominal = document.getElementById('manual-nominal').value;
-        if (!nominal || parseInt(nominal) < 50000) {
+        const rawNominal = document.getElementById('manual-nominal').value;
+        const amount = parseAmount(rawNominal);
+        
+        if (!amount || amount < 50000) {
             alert("Minimal transfer Rp 50.000");
             return;
         }
         alert("Terima kasih! Konfirmasi pembayaran GoPay Anda sedang diproses.");
-        window.location.href = "../";
+        openLiveChatSystem();
     }
 
     function confirmPayment() {
         alert("Terima kasih! Pembayaran Anda sedang diproses.");
-        window.location.href = "../";
+        openLiveChatSystem();
+    }
+
+    function openLiveChatSystem() {
+        window.open("https://direct.lc.chat/19851307/", "_blank");
     }
 </script>
 
