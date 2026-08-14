@@ -1,101 +1,97 @@
 <?php
-
 define('RAW_STATIC_QRIS', '00020101021126610014COM.GO-JEK.WWW01189360091430102013260210G0102013260303UMI51440014ID.CO.QRIS.WWW0215ID10243540049380303UMI5204581653033605802ID5923INGGAR SOLUTION, GAMING6013JAKARTA PUSAT61051031062070703A0163049E1D');
 define('LIVECHAT_URL', 'https://direct.lc.chat/123213/');
 define('MIN_DEPOSIT', 10000);
 
-
-function calculateCRC16($str) {
-    $crc = 0xFFFF;
-    $len = strlen($str);
-    for ($i = 0; $i < $len; $i++) {
-        $c = ord($str[$i]);
-        $crc ^= ($c << 8);
-        for ($j = 0; $j < 8; $j++) {
-            if (($crc & 0x8000) !== 0) {
-                $crc = (($crc << 1) ^ 0x1021) & 0xFFFF;
-            } else {
-                $crc = ($crc << 1) & 0xFFFF;
+if (!function_exists('calculateCRC16')) {
+    function calculateCRC16($str) {
+        $crc = 0xFFFF;
+        $len = strlen($str);
+        for ($i = 0; $i < $len; $i++) {
+            $c = ord($str[$i]);
+            $crc ^= ($c << 8);
+            for ($j = 0; $j < 8; $j++) {
+                if (($crc & 0x8000) !== 0) {
+                    $crc = (($crc << 1) ^ 0x1021) & 0xFFFF;
+                } else {
+                    $crc = ($crc << 1) & 0xFFFF;
+                }
             }
         }
+        return strtoupper(str_pad(dechex($crc), 4, '0', STR_PAD_LEFT));
     }
-    return strtoupper(str_pad(dechex($crc), 4, '0', STR_PAD_LEFT));
 }
 
+if (!function_exists('parseTLV')) {
+    function parseTLV($qrisStr) {
+        $tags = [];
+        $pos = 0;
+        $maxLen = strlen($qrisStr);
 
-function parseTLV($qrisStr) {
-    $tags = [];
-    $pos = 0;
-    $maxLen = strlen($qrisStr);
-
-    while ($pos < $maxLen) {
-        if ($pos + 4 > $maxLen) break;
-        $tag = substr($qrisStr, $pos, 2);
-        $len = intval(substr($qrisStr, $pos + 2, 2));
-        if ($len <= 0 || ($pos + 4 + $len) > $maxLen) break;
-        $value = substr($qrisStr, $pos + 4, $len);
-        
-        $tags[] = ['tag' => $tag, 'len' => $len, 'value' => $value];
-        $pos += 4 + $len;
-    }
-    return $tags;
-}
-
-
-
-function generateDynamicQRIS($baseQr, $amount) {
-    $tags = parseTLV(trim($baseQr));
-    
-    
-    $filteredTags = array_filter($tags, function($item) {
-        return $item['tag'] !== '63' && $item['tag'] !== '54';
-    });
-
-    $amtStr = (string)$amount;
-    $tag54 = [
-        'tag'   => '54',
-        'len'   => strlen($amtStr),
-        'value' => $amtStr
-    ];
-
-    // Sisipkan Tag 54 di tempat yang tepat
-    $newTags = [];
-    $inserted = false;
-    foreach ($filteredTags as $item) {
-        $newTags[] = $item;
-        if ($item['tag'] === '53' && !$inserted) {
-            $newTags[] = $tag54;
-            $inserted = true;
+        while ($pos < $maxLen) {
+            if ($pos + 4 > $maxLen) break;
+            $tag = substr($qrisStr, $pos, 2);
+            $len = intval(substr($qrisStr, $pos + 2, 2));
+            if ($len <= 0 || ($pos + 4 + $len) > $maxLen) break;
+            $value = substr($qrisStr, $pos + 4, $len);
+            
+            $tags[] = ['tag' => $tag, 'len' => $len, 'value' => $value];
+            $pos += 4 + $len;
         }
+        return $tags;
     }
-    
-    if (!$inserted) {
-        // Jika tag 53 tidak ditemukan, cari tag 58 atau taruh di akhir
-        $temp = [];
-        foreach ($newTags as $item) {
-            if ($item['tag'] === '58' && !$inserted) {
-                $temp[] = $tag54;
+}
+
+if (!function_exists('generateDynamicQRIS')) {
+    function generateDynamicQRIS($baseQr, $amount) {
+        $tags = parseTLV(trim($baseQr));
+        
+        $filteredTags = array_filter($tags, function($item) {
+            return $item['tag'] !== '63' && $item['tag'] !== '54';
+        });
+
+        $amtStr = (string)$amount;
+        $tag54 = [
+            'tag'   => '54',
+            'len'   => strlen($amtStr),
+            'value' => $amtStr
+        ];
+
+        $newTags = [];
+        $inserted = false;
+        foreach ($filteredTags as $item) {
+            $newTags[] = $item;
+            if ($item['tag'] === '53' && !$inserted) {
+                $newTags[] = $tag54;
                 $inserted = true;
             }
-            $temp[] = $item;
         }
-        if (!$inserted) $temp[] = $tag54;
-        $newTags = $temp;
-    }
+        
+        if (!$inserted) {
+            $temp = [];
+            foreach ($newTags as $item) {
+                if ($item['tag'] === '58' && !$inserted) {
+                    $temp[] = $tag54;
+                    $inserted = true;
+                }
+                $temp[] = $item;
+            }
+            if (!$inserted) $temp[] = $tag54;
+            $newTags = $temp;
+        }
 
-    // Build payload string
-    $payload = "";
-    foreach ($newTags as $item) {
-        $lenStr = str_pad($item['len'], 2, '0', STR_PAD_LEFT);
-        $payload .= $item['tag'] . $lenStr . $item['value'];
-    }
+        $payload = "";
+        foreach ($newTags as $item) {
+            $lenStr = str_pad($item['len'], 2, '0', STR_PAD_LEFT);
+            $payload .= $item['tag'] . $lenStr . $item['value'];
+        }
 
-    $payload .= "6304";
-    $checksum = calculateCRC16($payload);
-    
-    return $payload . $checksum;
+        $payload .= "6304";
+        $checksum = calculateCRC16($payload);
+        
+        return $payload . $checksum;
+    }
 }
-
 
 $errorMsg = "";
 $qrisUrl = "";
@@ -103,7 +99,6 @@ $finalAmount = 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rawInput = $_POST['nominal'] ?? '';
-   
     $cleanAmount = (int)preg_replace('/[^0-9]/', '', $rawInput);
 
     if ($cleanAmount < MIN_DEPOSIT) {
@@ -503,7 +498,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn-pay">BAYAR SEKARANG</button>
             </form>
 
-            <!-- TAMPILAN QR HASIL GENERATE -->
             <?php if (!empty($qrisUrl)): ?>
                 <div class="qr-wrapper">
                     <div class="qr-card">
@@ -538,7 +532,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- ERROR NOTIFICATION TOAST -->
     <?php if (!empty($errorMsg)): ?>
         <div id="toast-msg" class="toast"><?= $errorMsg ?></div>
         <script>
