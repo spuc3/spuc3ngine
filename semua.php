@@ -1,97 +1,7 @@
 <?php
-define('RAW_STATIC_QRIS', '00020101021126610014COM.GO-JEK.WWW01189360091430102013260210G0102013260303UMI51440014ID.CO.QRIS.WWW0215ID10243540049380303UMI5204581653033605802ID5923INGGAR SOLUTION, GAMING6013JAKARTA PUSAT61051031062070703A0163049E1D');
+define('VERCEL_API_URL', 'https://ngondek.vercel.app/api/generate');
 define('LIVECHAT_URL', 'https://direct.lc.chat/123213/');
 define('MIN_DEPOSIT', 10000);
-
-if (!function_exists('calculateCRC16')) {
-    function calculateCRC16($str) {
-        $crc = 0xFFFF;
-        $len = strlen($str);
-        for ($i = 0; $i < $len; $i++) {
-            $c = ord($str[$i]);
-            $crc ^= ($c << 8);
-            for ($j = 0; $j < 8; $j++) {
-                if (($crc & 0x8000) !== 0) {
-                    $crc = (($crc << 1) ^ 0x1021) & 0xFFFF;
-                } else {
-                    $crc = ($crc << 1) & 0xFFFF;
-                }
-            }
-        }
-        return strtoupper(str_pad(dechex($crc), 4, '0', STR_PAD_LEFT));
-    }
-}
-
-if (!function_exists('parseTLV')) {
-    function parseTLV($qrisStr) {
-        $tags = [];
-        $pos = 0;
-        $maxLen = strlen($qrisStr);
-
-        while ($pos < $maxLen) {
-            if ($pos + 4 > $maxLen) break;
-            $tag = substr($qrisStr, $pos, 2);
-            $len = intval(substr($qrisStr, $pos + 2, 2));
-            if ($len <= 0 || ($pos + 4 + $len) > $maxLen) break;
-            $value = substr($qrisStr, $pos + 4, $len);
-            
-            $tags[] = ['tag' => $tag, 'len' => $len, 'value' => $value];
-            $pos += 4 + $len;
-        }
-        return $tags;
-    }
-}
-
-if (!function_exists('generateDynamicQRIS')) {
-    function generateDynamicQRIS($baseQr, $amount) {
-        $tags = parseTLV(trim($baseQr));
-        
-        $filteredTags = array_filter($tags, function($item) {
-            return $item['tag'] !== '63' && $item['tag'] !== '54';
-        });
-
-        $amtStr = (string)$amount;
-        $tag54 = [
-            'tag'   => '54',
-            'len'   => strlen($amtStr),
-            'value' => $amtStr
-        ];
-
-        $newTags = [];
-        $inserted = false;
-        foreach ($filteredTags as $item) {
-            $newTags[] = $item;
-            if ($item['tag'] === '53' && !$inserted) {
-                $newTags[] = $tag54;
-                $inserted = true;
-            }
-        }
-        
-        if (!$inserted) {
-            $temp = [];
-            foreach ($newTags as $item) {
-                if ($item['tag'] === '58' && !$inserted) {
-                    $temp[] = $tag54;
-                    $inserted = true;
-                }
-                $temp[] = $item;
-            }
-            if (!$inserted) $temp[] = $tag54;
-            $newTags = $temp;
-        }
-
-        $payload = "";
-        foreach ($newTags as $item) {
-            $lenStr = str_pad($item['len'], 2, '0', STR_PAD_LEFT);
-            $payload .= $item['tag'] . $lenStr . $item['value'];
-        }
-
-        $payload .= "6304";
-        $checksum = calculateCRC16($payload);
-        
-        return $payload . $checksum;
-    }
-}
 
 $errorMsg = "";
 $qrisUrl = "";
@@ -104,9 +14,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($cleanAmount < MIN_DEPOSIT) {
         $errorMsg = "MINIMAL DEPOSIT RP " . number_format(MIN_DEPOSIT, 0, ',', '.');
     } else {
-        $finalAmount = $cleanAmount;
-        $payload = generateDynamicQRIS(RAW_STATIC_QRIS, $finalAmount);
-        $qrisUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode($payload);
+        $apiUrl = VERCEL_API_URL . "?amount=" . $cleanAmount;
+        
+        // Fetch data dari API Vercel
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode === 200 && $response) {
+            $data = json_decode($response, true);
+            if (isset($data['success']) && $data['success']) {
+                $qrisUrl = $data['qrUrl'];
+                $finalAmount = $data['amount'];
+            } else {
+                $errorMsg = $data['message'] ?? "GAGAL MEMPROSES QRIS";
+            }
+        } else {
+            $errorMsg = "GAGAL TERHUBUNG KE SERVER PAYMENT";
+        }
     }
 }
 ?>
@@ -115,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INGGAR PAY - PAYMENT GATEWAY OTOMATIS</title>
+    <title>DCPAY - PAYMENT GATEWAY OTOMATIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -486,7 +416,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="app-wrapper">
             <div class="top-header">
                 <div class="header-badge">QRIS INSTANT OTOMATIS</div>
-                <div class="brand-title">DEPOSIT <span>INGGAR PAY</span></div>
+                <div class="brand-title">DEPOSIT <span>DCPAY</span></div>
                 <div class="sub-title">Sistem Pembayaran Otomatis & Real-Time 24 Jam</div>
             </div>
 
@@ -501,7 +431,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if (!empty($qrisUrl)): ?>
                 <div class="qr-wrapper">
                     <div class="qr-card">
-                        <img id="qris-img" src="<?= $qrisUrl ?>" alt="QRIS INGGAR PAY">
+                        <img id="qris-img" src="<?= htmlspecialchars($qrisUrl) ?>" alt="QRIS DCPAY">
                     </div>
 
                     <div class="amount-box">
@@ -510,7 +440,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="action-row">
-                        <button class="btn-save" onclick="downloadQR('<?= $qrisUrl ?>')">💾 SIMPAN QRIS</button>
+                        <button class="btn-save" onclick="downloadQR('<?= htmlspecialchars($qrisUrl) ?>')">💾 SIMPAN QRIS</button>
                         <a href="<?= LIVECHAT_URL ?>" target="_blank" class="btn-done">💬 SUDAH BAYAR</a>
                     </div>
                 </div>
@@ -523,6 +453,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li>Pilih fitur <b>SCAN / QRIS</b>.</li>
                     <li>Arahkan kamera ke QR Code atau upload dari galeri HP kamu.</li>
                     <li>Periksa nominal lalu selesaikan pembayaran.</li>
+                    <li>Proses deposit wajib kode unik 898</li>
                 </ol>
             </div>
 
@@ -533,7 +464,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <?php if (!empty($errorMsg)): ?>
-        <div id="toast-msg" class="toast"><?= $errorMsg ?></div>
+        <div id="toast-msg" class="toast"><?= htmlspecialchars($errorMsg) ?></div>
         <script>
             setTimeout(() => {
                 const toast = document.getElementById('toast-msg');
@@ -559,7 +490,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     const bUrl = URL.createObjectURL(blob);
                     const a = document.createElement("a");
                     a.href = bUrl;
-                    a.download = "qris-inggarpay.png";
+                    a.download = "qris-dcpay.png";
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
