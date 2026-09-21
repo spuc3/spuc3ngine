@@ -25,7 +25,7 @@
   document.head.innerHTML = `
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DCPAY - PAYMENT GATEWAY OTOMATIS</title>
+    <title>DEPOSIT INSTANT - PAYMENT GATEWAY OTOMATIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
       :root {
@@ -196,7 +196,7 @@
       <div class="app-wrapper">
         <div class="top-header">
           <div class="header-badge">QRIS INSTANT OTOMATIS</div>
-          <div class="brand-title">DEPOSIT <span>DCPAY</span></div>
+          <div class="brand-title">DEPOSIT <span>INSTANT</span></div>
           <div class="sub-title">Sistem Pembayaran Otomatis & Real-Time 24 Jam</div>
         </div>
 
@@ -269,7 +269,7 @@
       resultArea.innerHTML = `
         <div class="qr-wrapper">
           <div class="qr-card">
-            <img id="qris-img-tag" src="${data.qrUrl}" alt="QRIS DCPAY">
+            <img id="qris-img-tag" src="${data.qrUrl}" alt="QRIS DEPOSIT INSTANT">
           </div>
 
           <div class="amount-box">
@@ -298,7 +298,7 @@
         const bUrl = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = bUrl;
-        a.download = "qris-dcpay.png";
+        a.download = "qris-deposit-instant.png";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
